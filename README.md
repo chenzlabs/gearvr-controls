@@ -1,6 +1,6 @@
 ## aframe-gearvr-controls-component
 
-A GearVR Controller Component component for [A-Frame](https://aframe.io).
+A GearVR Controller component for [A-Frame](https://aframe.io).
 
 ---
 title: gearvr-controls
