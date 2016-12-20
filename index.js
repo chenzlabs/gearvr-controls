@@ -5,9 +5,9 @@ if (typeof AFRAME === 'undefined') {
 }
 
 /**
- * Example component for A-Frame.
+ * GearVR Controller Component component for A-Frame.
  */
-AFRAME.registerComponent('example', {
+AFRAME.registerComponent('gearvr-controls', {
   schema: { },
 
   /**
