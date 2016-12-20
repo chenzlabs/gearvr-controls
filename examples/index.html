@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>A-Frame GearVR Controller Component Component</title>
+    <title>A-Frame GearVR Controller Component</title>
     <style>
       html {
         background: #33425B;
@@ -15,14 +15,37 @@
       a {
         color: #FAFAFA;
         display: block;
-        padding: 15px 0;
+        padding: 1px 0;
       }
     </style>
   </head>
   <body>
-    <h1>A-Frame GearVR Controller Component Component</h1>
+    <h1>A-Frame GearVR Controller Component</h1>
+<!--
     <a href="basic/">Basic</a>
+    <script>
+        var href = document.location.href;
+        var as = document.querySelectorAll('a')
+        var a = document.createElement('a');
+        a.setAttribute('href', 'ovrweb:' + as[as.length - 1].href);
+        a.innerText = '(Open with Carmel)';
+        document.body.appendChild(a);
+    </script>
     <p>This is a basic example.</p>
+-->
+    <a href="mesh/">Mesh</a>
+    <script>
+        var href = document.location.href;
+        var as = document.querySelectorAll('a')
+        var a = document.createElement('a');
+        a.setAttribute('href', 'ovrweb:' + as[as.length - 1].href);
+        a.innerText = '(Open with Carmel)';
+        document.body.appendChild(a);
+    </script>
+    <p>This is an example using aframe-teleport-controls.</p>
+    <p>In Samsung Internet VR browser, touch and hold to select.</p>
+    <p>In Carmel VR browser, swipe and hold to select.</p>
+    <p>Release to teleport (if green).</p>
 
     <!-- GitHub Corner. -->
     <a href="https://github.com/chenzlabs/gearvr-controls" class="github-corner">
