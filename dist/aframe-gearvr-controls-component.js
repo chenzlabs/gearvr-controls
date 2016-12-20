@@ -51,7 +51,7 @@
 	}
 
 	var bind = AFRAME.utils.bind;
-	var getGamepadsByPrefix = AFRAME.utils['tracked-controls'].getGamepadsByPrefix;
+	var getGamepadsByPrefix = AFRAME.utils.trackedControls.getGamepadsByPrefix;
 	//var THREE = require('../lib/three');
 
 	var GAMEPAD_ID_PREFIX = 'Gear VR Touchpad';
