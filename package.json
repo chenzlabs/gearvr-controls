@@ -1,6 +1,6 @@
 {
   "name": "aframe-gearvr-controls-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "GearVR Controller Component component for A-Frame.",
   "main": "index.js",
   "scripts": {
