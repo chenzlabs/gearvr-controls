@@ -11,6 +11,19 @@ var getGamepadsByPrefix = AFRAME.utils.trackedControls.getGamepadsByPrefix;
 var GAMEPAD_ID_PREFIX = 'Gear VR Touchpad';
 
 /**
+ * Inject gearvr-controls utils functions.
+ */
+AFRAME.utils.gearvrControls = {
+  isSamsungInternetBrowser: function () { return navigator.userAgent.indexOf(' SamsungBrowser/') >= 0; },
+
+  isControllerPresent: function () {
+    if (AFRAME.utils.gearvrControls.isSamsungInternetBrowser()) return true;
+    var gamepads = AFRAME.utils.trackedControls.getGamepadsByPrefix('Gear VR Touchpad');
+    return gamepads && gamepads.length > 0;
+  }
+};
+
+/**
  * GearVR Controls Component
  * Interfaces with Gear VR touchpad.  For Carmel browser, it maps
  * Gamepad events to common controller button (trackpad) and axes.
@@ -61,7 +74,7 @@ AFRAME.registerComponent('gearvr-controls', {
     this.bindMethods();
     this.getGamepadsByPrefix = getGamepadsByPrefix; // to allow mock
     // check whether we need to emulate Gamepad for Samsung Internet browser
-    this.isSamsungInternetBrowser = navigator.userAgent.indexOf(' SamsungBrowser/') >= 0;
+    this.isSamsungInternetBrowser = AFRAME.utils.gearvrControls.isSamsungInternetBrowser();
     if (this.isSamsungInternetBrowser) {
       this.controller = this.fauxController = {buttons: [{pressed: false}], axes: [0, 0]};
     }
