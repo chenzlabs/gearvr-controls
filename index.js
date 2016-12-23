@@ -187,10 +187,10 @@ AFRAME.registerComponent('gearvr-controls', {
     var previousButtonState = buttonStates[id] = buttonStates[id] || {};
     var pressed = buttonState.pressed;
     // as workaround for Carmel deferring button down event until button up,
-    // if non-zero axis (which requires holding finger on touchpad), treat as down
+    // if non-zero vertical axis (which requires holding finger on touchpad), treat as down
     var previousAxis = this.previousAxis;
     if (!this.isSamsungInternetBrowser &&
-      previousAxis && (previousAxis.length > 1) && (previousAxis[0] || previousAxis[1])) { pressed = true; }
+      previousAxis && (previousAxis.length > 1) && previousAxis[1]) { pressed = true; }
     if (pressed === previousButtonState.pressed) { return false; }
     this.onButtonEvent(id, pressed ? 'down' : 'up');
     previousButtonState.pressed = pressed;
