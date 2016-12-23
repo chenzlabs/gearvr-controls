@@ -57,6 +57,19 @@
 	var GAMEPAD_ID_PREFIX = 'Gear VR Touchpad';
 
 	/**
+	 * Inject gearvr-controls utils functions.
+	 */
+	AFRAME.utils.gearvrControls = {
+	  isSamsungInternetBrowser: function () { return navigator.userAgent.indexOf(' SamsungBrowser/') >= 0; },
+
+	  isControllerPresent: function () {
+	    if (AFRAME.utils.gearvrControls.isSamsungInternetBrowser()) return true;
+	    var gamepads = AFRAME.utils.trackedControls.getGamepadsByPrefix('Gear VR Touchpad');
+	    return gamepads && gamepads.length > 0;
+	  }
+	};
+
+	/**
 	 * GearVR Controls Component
 	 * Interfaces with Gear VR touchpad.  For Carmel browser, it maps
 	 * Gamepad events to common controller button (trackpad) and axes.
@@ -107,7 +120,7 @@
 	    this.bindMethods();
 	    this.getGamepadsByPrefix = getGamepadsByPrefix; // to allow mock
 	    // check whether we need to emulate Gamepad for Samsung Internet browser
-	    this.isSamsungInternetBrowser = navigator.userAgent.indexOf(' SamsungBrowser/') >= 0;
+	    this.isSamsungInternetBrowser = AFRAME.utils.gearvrControls.isSamsungInternetBrowser();
 	    if (this.isSamsungInternetBrowser) {
 	      this.controller = this.fauxController = {buttons: [{pressed: false}], axes: [0, 0]};
 	    }
@@ -233,10 +246,10 @@
 	    var previousButtonState = buttonStates[id] = buttonStates[id] || {};
 	    var pressed = buttonState.pressed;
 	    // as workaround for Carmel deferring button down event until button up,
-	    // if non-zero axis (which requires holding finger on touchpad), treat as down
+	    // if non-zero vertical axis (which requires holding finger on touchpad), treat as down
 	    var previousAxis = this.previousAxis;
 	    if (!this.isSamsungInternetBrowser &&
-	      previousAxis && (previousAxis.length > 1) && (previousAxis[0] || previousAxis[1])) { pressed = true; }
+	      previousAxis && (previousAxis.length > 1) && previousAxis[1]) { pressed = true; }
 	    if (pressed === previousButtonState.pressed) { return false; }
 	    this.onButtonEvent(id, pressed ? 'down' : 'up');
 	    previousButtonState.pressed = pressed;
