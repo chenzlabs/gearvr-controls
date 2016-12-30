@@ -1,6 +1,6 @@
 {
   "name": "aframe-gearvr-controls-component",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "GearVR Controller Component component for A-Frame.",
   "main": "index.js",
   "scripts": {
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/chenzlabs/gearvr-controls#readme",
   "devDependencies": {
-    "aframe": "chenzlabs/aframe#25f7436",
+    "aframe": "aframevr/aframe#0d561d5",
     "browserify": "^13.0.0",
     "browserify-css": "^0.9.1",
     "budo": "^8.2.2",
