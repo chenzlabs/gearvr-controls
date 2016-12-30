@@ -4,9 +4,9 @@ A GearVR Controller component for [A-Frame](https://aframe.io).
 
 ![GearVR Touchpad](https://chenzlabs.github.io/gearvr-controls/tapgearvr.jpg)
 
-[trackedcontrols]: https://rawgit.com/aframevr/aframe/master/docs/components/tracked-controls.md
-[lookcontrols]: https://rawgit.com/aframevr/aframe/master/docs/components/look-controls.md
-[handcontrols]: https://rawgit.com/aframevr/aframe/master/docs/components/hand-controls.md
+[trackedcontrols]: https://github.com/aframevr/aframe/blob/master/docs/components/tracked-controls.md
+[lookcontrols]: https://github.com/aframevr/aframe/blob/master/docs/components/look-controls.md
+[handcontrols]: https://github.com/aframevr/aframe/blob/master/docs/components/hand-controls.md
 
 The gearvr-controls component interfaces with the Gear VR Touchpad
 controller exposed by the Carmel and Samsung Internet VR browsers.
