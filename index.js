@@ -109,8 +109,7 @@ AFRAME.registerComponent('gearvr-controls', {
   },
 
   addControllerAttributes: function () {
-//    this.el.removeAttribute('tracked-controls');
-
+    // FIXME: if Touch controllers present and active, don't use look-controls!
     this.el.setAttribute('look-controls', '');
     if (this.isSamsungInternetBrowser) {
       window.addEventListener('touchstart', this.onTouchStart, false);
@@ -145,6 +144,7 @@ AFRAME.registerComponent('gearvr-controls', {
     if (isPresent === this.controllerPresent) { return; }
     this.controllerPresent = isPresent;
     if (isPresent) {
+      // FIXME: if Touch controllers present and active, don't use look-controls!
       this.addControllerAttributes();
     } else {
       this.removeControllerAttributes();
@@ -160,6 +160,7 @@ AFRAME.registerComponent('gearvr-controls', {
     // Therefore, we have to do tick processing for the Gear VR Touchpad ourselves.
     this.checkIfControllerPresent();
     if (!this.controllerPresent) { return; }
+    // FIXME: if Touch controllers are present and active, don't use offset!
     // offset the hand position so it's not on the ground
     var offset = new THREE.Vector3(this.data.hand === 'left' ? -0.15 : 0.15, this.controller.id === OCULUS_REMOTE_PREFIX ? -0.25 : 1.25, -0.15);
     // look-controls and/or tracked-controls computed position and rotation before we get here
