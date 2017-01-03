@@ -9,6 +9,7 @@ var getGamepadsByPrefix = AFRAME.utils.trackedControls.getGamepadsByPrefix;
 //var THREE = require('../lib/three');
 
 var GAMEPAD_ID_PREFIX = 'Gear VR Touchpad';
+var OCULUS_REMOTE_PREFIX = 'Oculus Remote';
 
 /**
  * Inject gearvr-controls utils functions.
@@ -18,8 +19,13 @@ AFRAME.utils.gearvrControls = {
 
   isControllerPresent: function () {
     if (AFRAME.utils.gearvrControls.isSamsungInternetBrowser()) return true;
-    var gamepads = AFRAME.utils.trackedControls.getGamepadsByPrefix('Gear VR Touchpad');
-    return gamepads && gamepads.length > 0;
+    var gamepads = AFRAME.utils.trackedControls.getGamepadsByPrefix(GAMEPAD_ID_PREFIX);
+    var isPresent = gamepads && gamepads.length > 0;
+    if (!isPresent) {
+      gamepads = AFRAME.utils.trackedControls.getGamepadsByPrefix(OCULUS_REMOTE_PREFIX);
+      isPresent = gamepads && gamepads.length > 0;
+    }
+    return isPresent;
   }
 };
 
@@ -78,6 +84,9 @@ AFRAME.registerComponent('gearvr-controls', {
     if (this.isSamsungInternetBrowser) {
       this.controller = this.fauxController = {buttons: [{pressed: false}], axes: [0, 0]};
     }
+
+    // if we're using Oculus Remote, don't let Touch controllers (or phantoms) interfere with pose
+    this.el.removeAttribute('oculus-touch-controls');
   },
 
   /**
@@ -100,6 +109,8 @@ AFRAME.registerComponent('gearvr-controls', {
   },
 
   addControllerAttributes: function () {
+//    this.el.removeAttribute('tracked-controls');
+
     this.el.setAttribute('look-controls', '');
     if (this.isSamsungInternetBrowser) {
       window.addEventListener('touchstart', this.onTouchStart, false);
@@ -121,6 +132,7 @@ AFRAME.registerComponent('gearvr-controls', {
     // The 'Gear VR Touchpad' gamepad exposed by Carmel has no pose,
     // so it won't show up in the tracked-controls system controllers.
     var gamepads = this.getGamepadsByPrefix(GAMEPAD_ID_PREFIX);
+    if (!gamepads || !gamepads.length) { gamepads = this.getGamepadsByPrefix(OCULUS_REMOTE_PREFIX); }
     if (!gamepads || !gamepads.length) { return undefined; }
     return gamepads[0];
   },
@@ -149,7 +161,7 @@ AFRAME.registerComponent('gearvr-controls', {
     this.checkIfControllerPresent();
     if (!this.controllerPresent) { return; }
     // offset the hand position so it's not on the ground
-    var offset = new THREE.Vector3(this.data.hand === 'left' ? -0.15 : 0.15, 1.25, -0.15);
+    var offset = new THREE.Vector3(this.data.hand === 'left' ? -0.15 : 0.15, this.controller.id === OCULUS_REMOTE_PREFIX ? -0.25 : 1.25, -0.15);
     // look-controls and/or tracked-controls computed position and rotation before we get here
     // so rotate the offset in the right direction and add it
     offset.applyAxisAngle(this.el.object3D.up, this.el.object3D.rotation.y);
