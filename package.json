@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/chenzlabs/gearvr-controls#readme",
   "devDependencies": {
-    "aframe": "aframevr/aframe#0d561d5",
+    "aframe": "aframevr/aframe#8ad5261",
     "browserify": "^13.0.0",
     "browserify-css": "^0.9.1",
     "budo": "^8.2.2",
