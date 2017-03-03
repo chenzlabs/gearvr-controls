@@ -142,22 +142,30 @@ AFRAME.registerComponent('gearvr-controls', {
   /**
    * Called on each scene tick.
    */
-  tick: function () {
+  tick: (function () {
+    var position = new THREE.Vector3();
+    return function () {
+
     // The 'Gear VR Touchpad' gamepad exposed by Carmel has no pose,
     // so it won't show up in the tracked-controls system controllers.
     // Therefore, we have to do tick processing for the Gear VR Touchpad ourselves.
     this.checkIfControllerPresent();
     if (!this.controllerPresent) { return; }
+    // start with same position as camera
+    position.copy(this.el.sceneEl.camera.el.object3D.position);
     // offset the hand position so it's not on the ground
-    var offset = new THREE.Vector3(this.data.hand === 'left' ? -0.15 : 0.15, 1.25, -0.15);
+    var offset = new THREE.Vector3(this.data.hand === 'left' ? -0.15 : 0.15, -0.25, -0.15);
     // look-controls and/or tracked-controls computed position and rotation before we get here
     // so rotate the offset in the right direction and add it
     offset.applyAxisAngle(this.el.object3D.up, this.el.object3D.rotation.y);
-    this.el.object3D.position.add(offset);
+    position.add(offset);
+    this.el.setAttribute('position', { x: position.x, y: position.y, z: position.z });
     // apply the model rotation, since tracked-controls can't do it for us
     this.el.object3D.rotation.z += this.data.rotationOffset;
     this.updateButtons();
-  },
+
+    };
+  })(),
 
   updateButtons: function () {
     var i;
