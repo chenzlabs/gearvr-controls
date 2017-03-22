@@ -31,9 +31,10 @@ AFRAME.utils.gearvrControls = {
  * to simulate appropriate Gamepad behavior.
  */
 AFRAME.registerComponent('gearvr-controls', {
+/* DON'T DO UNLESS isPresent!
   // since aframe-teleport-controls looks for tracked-controls, add one
   dependencies: ['tracked-controls'],
-
+*/
   /**
    * Set if component needs multiple instancing.
    */
@@ -100,6 +101,8 @@ AFRAME.registerComponent('gearvr-controls', {
   },
 
   addControllerAttributes: function () {
+    // since aframe-teleport-controls looks for tracked-controls, add one
+    this.el.setAttribute('tracked-controls', 'id:never-match-this-gearvr-teleport-affordance');
     this.el.setAttribute('look-controls', '');
     if (this.isSamsungInternetBrowser) {
       window.addEventListener('touchstart', this.onTouchStart, false);
@@ -109,6 +112,7 @@ AFRAME.registerComponent('gearvr-controls', {
   },
 
   removeControllerAttributes: function () {
+    this.el.removeAttribute('tracked-controls');
     this.el.removeAttribute('look-controls');
     if (this.isSamsungInternetBrowser) {
       window.removeEventListener('touchstart', this.onTouchStart, false);
